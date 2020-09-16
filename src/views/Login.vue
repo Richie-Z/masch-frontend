@@ -40,13 +40,14 @@ export default {
           password: this.form.password,
         }),
       })
-        .then((response) => {
-          response.json();
-          this.$root.$emit("login", true);
-        })
+        .then((response) => response.json())
         .then((data) => {
           localStorage.setItem("token", data);
           this.$router.push({ name: "Home" });
+          console.log("data:", data);
+        })
+        .then(() => {
+          this.$root.$emit("login", true);
         });
     },
   },
