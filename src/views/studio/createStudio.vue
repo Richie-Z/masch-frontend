@@ -106,7 +106,12 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:8000/api/branches")
+    let token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:8000/api/v1/branches", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.branch = data;
@@ -114,11 +119,13 @@ export default {
   },
   methods: {
     add() {
-      fetch("http://127.0.0.1:8000/api/studio/", {
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/studio/", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
           charset: "utf-8",
+          Authorization: `Bearer ${token}`,
         },
         method: "POST",
         body: JSON.stringify({
