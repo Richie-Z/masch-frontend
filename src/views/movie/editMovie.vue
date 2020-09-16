@@ -66,7 +66,12 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:8000/api/movie/" + this.$route.params.id)
+    let token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:8000/api/v1/movie/" + this.$route.params.id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.form = data;
@@ -74,10 +79,12 @@ export default {
   },
   methods: {
     edit() {
-      fetch("http://127.0.0.1:8000/api/movie/" + this.$route.params.id, {
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/movie/" + this.$route.params.id, {
         headers: {
           "Content-Type": "application/json",
           charset: "utf-8",
+          Authorization: `Bearer ${token}`,
         },
         method: "PUT",
         body: JSON.stringify({
