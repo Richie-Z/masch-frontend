@@ -56,12 +56,17 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:8000/api/movies")
+    let token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:8000/api/v1/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.movie = data;
       });
-    fetch("http://127.0.0.1:8000/api/studios")
+    fetch("http://127.0.0.1:8000/api/v1/studios", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.studio = data;
@@ -69,11 +74,13 @@ export default {
   },
   methods: {
     add() {
-      fetch("http://127.0.0.1:8000/api/schedule/", {
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/schedule/", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
           charset: "utf-8",
+          Authorization: `Bearer ${token}`,
         },
         method: "POST",
         body: JSON.stringify({

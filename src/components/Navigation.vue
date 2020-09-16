@@ -11,7 +11,7 @@
           <b-nav-item to="/studio" v-if="isLoggedin">Studio</b-nav-item>
           <b-nav-item to="/movie" v-if="isLoggedin">Movie</b-nav-item>
           <b-nav-item to="/schedule" v-if="isLoggedin">Schedule</b-nav-item>
-          <b-nav-item to="/user/schedule" v-if="isLoggedin">Schedule</b-nav-item>
+          <b-nav-item to="/user/schedule" v-if="!isLoggedin">Schedule</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

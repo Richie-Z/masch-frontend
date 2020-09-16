@@ -31,7 +31,7 @@
           </div>
 
           <center>
-            <button @click.prevent="add" class="btn btn-primary">Add Schedule</button> |
+            <button @click.prevent="edit" class="btn btn-primary">Edit Schedule</button> |
             <router-link to="/schedule" class="btn btn-warning">Cancel</router-link>
           </center>
         </form>
@@ -56,29 +56,38 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:8000/api/movies")
+    let token = localStorage.getItem("token");
+    fetch("http://127.0.0.1:8000/api/v1/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.movie = data;
       });
-    fetch("http://127.0.0.1:8000/api/studios")
+    fetch("http://127.0.0.1:8000/api/v1/studios", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.studio = data;
       });
-    fetch("http://127.0.0.1:8000/api/schedule/" + this.$route.params.id)
+    fetch("http://127.0.0.1:8000/api/v1/schedule/" + this.$route.params.id, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((response) => response.json())
       .then((data) => {
         this.form = data;
       });
   },
   methods: {
-    add() {
-      fetch("http://127.0.0.1:8000/api/schedule/" + this.$route.params.id, {
+    edit() {
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/schedule/" + this.$route.params.id, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
           charset: "utf-8",
+          Authorization: `Bearer ${token}`,
         },
         method: "PUT",
         body: JSON.stringify({

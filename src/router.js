@@ -102,7 +102,7 @@ const routes = [
     path: "/user/schedule",
     name: "userSchedule",
     component: userSchedule,
-    meta: { authOnly: true },
+    meta: { guestOnly: true },
   },
   {
     path: "/login",
