@@ -17,7 +17,6 @@ import createSchedule from "./views/schedule/createSchedule.vue";
 import editSchedule from "./views/schedule/editSchedule.vue";
 import userSchedule from "./views/Schedule.vue";
 import Login from "./views/Login.vue";
-import Dashboard from "./views/Dashboard.vue";
 
 Vue.use(VueRouter);
 
@@ -31,81 +30,116 @@ const routes = [
     path: "/branch",
     name: "Branch",
     component: Branch,
+    meta: { authOnly: true },
   },
   {
     path: "/branch/add",
     name: "createBranch",
     component: createBranch,
+    meta: { authOnly: true },
   },
   {
     path: "/branch/:id",
     name: "editBranch",
     component: editBranch,
+    meta: { authOnly: true },
   },
   {
     path: "/studio",
     name: "Studio",
     component: Studio,
+    meta: { authOnly: true },
   },
   {
     path: "/studio/add",
     name: "createStudio",
     component: createStudio,
+    meta: { authOnly: true },
   },
   {
     path: "/studio/:id",
     name: "editStudio",
     component: editStudio,
+    meta: { authOnly: true },
   },
   {
     path: "/movie",
     name: "Movie",
     component: Movie,
+    meta: { authOnly: true },
   },
   {
     path: "/movie/add",
     name: "createMovie",
     component: createMovie,
+    meta: { authOnly: true },
   },
   {
     path: "/movie/:id",
     name: "editMovie",
     component: editMovie,
+    meta: { authOnly: true },
   },
   {
     path: "/schedule",
     name: "Schedule",
     component: Schedule,
+    meta: { authOnly: true },
   },
   {
     path: "/schedule/add",
     name: "createSchedule",
     component: createSchedule,
+    meta: { authOnly: true },
   },
   {
     path: "/schedule/:id",
     name: "editSchedule",
     component: editSchedule,
+    meta: { authOnly: true },
   },
   {
     path: "/user/schedule",
     name: "userSchedule",
     component: userSchedule,
+    meta: { authOnly: true },
   },
   {
     path: "/login",
     name: "Login",
     component: Login,
-  },
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    component: Dashboard,
+    meta: { guestOnly: true },
   },
 ];
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+});
+function isLoggedIn() {
+  return localStorage.getItem("token");
+}
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.authOnly)) {
+    if (!isLoggedIn()) {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else if (to.matched.some((record) => record.meta.guestOnly)) {
+    if (isLoggedIn()) {
+      next({
+        path: "/",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    } // make sure to always call next()!
+  } else {
+    next();
+  }
 });
 export default router;

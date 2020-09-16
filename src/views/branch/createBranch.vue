@@ -14,18 +14,16 @@
               placeholder="input branch region"
               v-model="form.name"
             />
-            <span class="text-danger" v-if="errors.name">{{
+            <span class="text-danger" v-if="errors.name">
+              {{
               errors.name[0]
-            }}</span>
+              }}
+            </span>
           </div>
           <center>
-            <button @click.prevent="add" class="btn btn-primary">
-              Add Branch
-            </button>
+            <button @click.prevent="add" class="btn btn-primary">Add Branch</button>
             |
-            <router-link to="/branch" class="btn btn-warning"
-              >Cancel</router-link
-            >
+            <router-link to="/branch" class="btn btn-warning">Cancel</router-link>
           </center>
         </form>
       </div>
@@ -44,7 +42,7 @@ export default {
   },
   methods: {
     add() {
-      fetch("http://127.0.0.1:8000/api/branch/", {
+      fetch("http://127.0.0.1:8000/api/v1/branch/", {
         headers: {
           "Content-Type": "application/json",
           charset: "utf-8",

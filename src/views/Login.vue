@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     login() {
-      fetch("http://127.0.0.1:8000/api/login", {
+      fetch("http://127.0.0.1:8000/api/v1/login", {
         headers: {
           "Content-Type": "application/json",
           charset: "utf-8",
@@ -40,11 +40,13 @@ export default {
           password: this.form.password,
         }),
       })
-        .then((response) => response.json())
-        .then((data) => {
+        .then((response) => {
+          response.json();
           this.$root.$emit("login", true);
+        })
+        .then((data) => {
           localStorage.setItem("token", data);
-          this.$router.push({ name: "Dashboard" });
+          this.$router.push({ name: "Home" });
         });
     },
   },

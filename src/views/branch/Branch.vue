@@ -40,14 +40,24 @@ export default {
   },
   methods: {
     getResult(page) {
-      fetch("http://127.0.0.1:8000/api/branch?page=" + page)
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/branch?page=" + page, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           this.form = data;
         });
     },
     loadData() {
-      fetch("http://127.0.0.1:8000/api/branch")
+      let token = localStorage.getItem("token");
+      fetch("http://127.0.0.1:8000/api/v1/branch", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => {
           this.form = data;
@@ -61,6 +71,7 @@ export default {
     //   });
     // },
     deleteData(id) {
+      let token = localStorage.getItem("token");
       this.$swal
         .fire({
           title: "Apakah kamu yakin?",
@@ -80,8 +91,11 @@ export default {
               icon: "success",
               timer: 1000,
             });
-            fetch("http://127.0.0.1:8000/api/branch/" + id, {
-              method: "delete",
+            fetch("http://127.0.0.1:8000/api/v1/branch/" + id, {
+              method: "DELETE",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }).then(() => {
               this.loadData();
             });
