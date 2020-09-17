@@ -20,7 +20,7 @@
             <b-dropdown-item @click.prevent="logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item to="/login" v-if="!isLoggedin">Login</b-nav-item>
-          <b-nav-item to="/studio" v-if="!isLoggedin">Register</b-nav-item>
+          <b-nav-item to="/register" v-if="!isLoggedin">Register</b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

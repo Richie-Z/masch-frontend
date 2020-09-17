@@ -17,6 +17,7 @@ import createSchedule from "./views/schedule/createSchedule.vue";
 import editSchedule from "./views/schedule/editSchedule.vue";
 import userSchedule from "./views/Schedule.vue";
 import Login from "./views/Login.vue";
+import Register from "./views/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -108,6 +109,12 @@ const routes = [
     path: "/login",
     name: "Login",
     component: Login,
+    meta: { guestOnly: true },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
     meta: { guestOnly: true },
   },
 ];
