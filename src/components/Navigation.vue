@@ -30,13 +30,15 @@ export default {
   name: "Navigation",
   data() {
     return {
+      token: localStorage.getItem("token"),
       details: [],
       isLoggedin: false,
     };
   },
   mounted() {
-    let token = localStorage.getItem("token");
-    if (token) {
+    this.$root.$on("login", () => {
+      this.isLoggedin = true;
+      let token = localStorage.getItem("token");
       fetch("http://127.0.0.1:8000/api/v1/details", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -46,11 +48,19 @@ export default {
         .then((data) => {
           this.details = data;
         });
-    }
-    this.$root.$on("login", () => {
-      this.isLoggedin = true;
     });
-    this.isLoggedin = !!token;
+    if (this.token) {
+      fetch("http://127.0.0.1:8000/api/v1/details", {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.details = data;
+        });
+    }
+    this.isLoggedin = !!this.token;
   },
   methods: {
     logout() {
