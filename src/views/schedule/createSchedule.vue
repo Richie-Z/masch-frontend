@@ -97,6 +97,13 @@ export default {
               title: "Schedule Overlapped",
             });
             return Promise.reject(error);
+          } else if (!response.ok) {
+            const error = "Data must be fullfiled";
+            this.$swal.fire({
+              icon: "error",
+              title: "Data must be fullfiled",
+            });
+            return Promise.reject(error);
           } else {
             this.$swal.fire({
               icon: "success",

@@ -13,7 +13,6 @@
           <b-nav-item to="/schedule" v-if="isLoggedin">Schedule</b-nav-item>
           <b-nav-item to="/user/schedule" v-if="!isLoggedin">Schedule</b-nav-item>
         </b-navbar-nav>
-
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown :text="details.name" right v-if="isLoggedin">
@@ -37,19 +36,21 @@ export default {
   },
   mounted() {
     let token = localStorage.getItem("token");
-    fetch("http://127.0.0.1:8000/api/v1/details", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        this.details = data;
-      });
+    if (token) {
+      fetch("http://127.0.0.1:8000/api/v1/details", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          this.details = data;
+        });
+    }
     this.$root.$on("login", () => {
       this.isLoggedin = true;
     });
-    this.isLoggedIn = !!token;
+    this.isLoggedin = !!token;
   },
   methods: {
     logout() {
@@ -60,7 +61,7 @@ export default {
         },
       }).then(() => {
         localStorage.removeItem("token");
-        this.isLoggedIn = false;
+        this.isLoggedin = false;
         this.$router.push({ name: "Home" });
       });
     },

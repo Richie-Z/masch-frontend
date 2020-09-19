@@ -57,7 +57,7 @@ export default {
   },
   mounted() {
     this.loadData();
-    fetch("http://127.0.0.1:8000/api/branches")
+    fetch("http://127.0.0.1:8000/api/v1/branches")
       .then((response) => response.json())
       .then((data) => {
         this.branches = data;
@@ -65,14 +65,14 @@ export default {
   },
   methods: {
     loadData() {
-      fetch("http://127.0.0.1:8000/api/user/schedule")
+      fetch("http://127.0.0.1:8000/api/v1/user/schedule")
         .then((response) => response.json())
         .then((data) => {
           this.form = data;
         });
     },
     filtering() {
-      fetch("http://127.0.0.1:8000/api/schedule/filter", {
+      fetch("http://127.0.0.1:8000/api/v1/schedule/filter", {
         headers: {
           "Content-Type": "application/json",
           charset: "utf-8",

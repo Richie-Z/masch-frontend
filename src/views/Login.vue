@@ -43,8 +43,8 @@ export default {
         .then((response) => response.json())
         .then((data) => {
           localStorage.setItem("token", data);
-          this.$router.push({ name: "Home" });
           console.log("data:", data);
+          this.$router.push({ name: "Home" });
         })
         .then(() => {
           this.$root.$emit("login", true);
