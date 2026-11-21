@@ -27,3 +27,4 @@ boot + healthcheck only (DB not smoke-tested). db_driver: unknown. Never migrate
 
 Smoke results: 2026-11-21T02:15:38+07:00 boot=PASS http=200 db=not verified (no read-only CLI for vue-spa; health endpoint only)
 Smoke results: 2026-11-21T15:05:53+07:00 boot=PASS http=200 db=skipped (legacy mysqli app; pgsql not supported without a code rewrite)
+Smoke results: 2026-11-21T21:27:32+07:00 boot=PASS http=200 db=skipped (legacy mysqli app; pgsql not supported without a code rewrite)
